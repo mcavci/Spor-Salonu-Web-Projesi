@@ -1,5 +1,5 @@
-
-using System;
+using Microsoft.EntityFrameworkCore;
+using SporSalonuProjesi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,18 @@ builder.Services.AddAuthentication(options =>
     options.AccessDeniedPath = "/Home/ErisimEngellendi";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
+//  Veritabaný Baðlantýsý (SQL Server)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null);
+        }));
+//builder.Services.AddHostedService<RandevuTemizlemeServisi>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
