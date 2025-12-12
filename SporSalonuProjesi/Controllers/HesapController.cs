@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication; 
-using Microsoft.AspNetCore.Authentication.Cookies; 
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
-using System.Security.Claims; 
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace SporSalonuProjesi.Controllers
@@ -29,29 +29,29 @@ namespace SporSalonuProjesi.Controllers
         public IActionResult Login()
         {
             return View();
-        }      
+        }
         [HttpPost]
         public async Task<IActionResult> Login(string email, string sifre)
         {
             var uye = _context.Uyeler.FirstOrDefault(x => x.Email == email && x.Sifre == sifre);
 
             if (uye != null)
-            {                
+            {
                 //  RESMİ KİMLİK OLUŞTURMA COOKIE AUTHENTICATION               
                 // Sisteme Bu adam kim bilgisini hazırlıyoruz
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, uye.Ad + " " + uye.Soyad), 
-                    new Claim("UyeId", uye.UyeId.ToString()),             
-                    new Claim(ClaimTypes.Email, uye.Email)              
+                    new Claim(ClaimTypes.Name, uye.Ad + " " + uye.Soyad),
+                    new Claim("UyeId", uye.UyeId.ToString()),
+                    new Claim(ClaimTypes.Email, uye.Email)
                 };
 
                 var userIdentity = new ClaimsIdentity(claims, "Cookies");
                 var principal = new ClaimsPrincipal(userIdentity);
 
-               
-                await HttpContext.SignInAsync("Cookies", principal);  
-                
+
+                await HttpContext.SignInAsync("Cookies", principal);
+
                 // SESSION (OTURUM) OLUŞTURMA               
                 HttpContext.Session.SetString("UyeId", uye.UyeId.ToString());
 
@@ -77,7 +77,7 @@ namespace SporSalonuProjesi.Controllers
             HttpContext.Session.Clear();
             HttpContext.Session.Remove("AktifKullanici");
 
-           
+
             return RedirectToAction("Login", "Hesap");
         }
 
@@ -122,6 +122,43 @@ namespace SporSalonuProjesi.Controllers
             }
 
             return View(model);
+        }
+
+        //PROFİL SAYFASI
+        [HttpGet]
+        public IActionResult Profil()
+        {
+            var uyeJson = HttpContext.Session.GetString("AktifKullanici");
+            if (string.IsNullOrEmpty(uyeJson)) return RedirectToAction("Login");
+
+            var sessionUye = JsonSerializer.Deserialize<Uye>(uyeJson);
+
+            string idYazi = sessionUye.UyeId.ToString();
+
+            var randevular = _context.Randevular
+                                     .Where(x => x.UyeId == idYazi)
+                                     .OrderByDescending(x => x.Tarih)
+                                     .ToList();
+
+            ViewBag.Randevular = randevular;
+            return View(sessionUye);
+        }
+
+        [HttpPost]
+        public IActionResult RandevuIptal(int id)
+        {
+            var uyeId = HttpContext.Session.GetString("UyeId");
+
+            var r = _context.Randevular
+                .FirstOrDefault(x => x.RandevuId == id && x.UyeId == uyeId);
+
+            if (r != null)
+            {
+                _context.Randevular.Remove(r);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Profil");
         }
     }
 }
