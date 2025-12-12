@@ -20,6 +20,26 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/DersProgramis/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVyc1Byb2dyYW1pc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/DersProgramis/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVyc1Byb2dyYW1pc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/DersProgramis/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVyc1Byb2dyYW1pc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/DersProgramis/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVyc1Byb2dyYW1pc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/DersProgramis/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVyc1Byb2dyYW1pc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Hesap/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVzYXBcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,6 +62,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Iletisim/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSWxldGlzaW1cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Pakets/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFrZXRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Pakets/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFrZXRzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Pakets/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFrZXRzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Pakets/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFrZXRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Pakets/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFrZXRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/web proje githup/SporSalonuProjesi/SporSalonuProjesi/Views/Shared/Error.cshtml]
