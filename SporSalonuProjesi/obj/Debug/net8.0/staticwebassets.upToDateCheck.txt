@@ -1,10 +1,14 @@
 wwwroot\css\hakkında.css
 wwwroot\css\Hesap.css
+wwwroot\css\Hoca.css
 wwwroot\css\profil.css
 wwwroot\css\site.css
 wwwroot\css\İletişim.css
 wwwroot\favicon.ico
 wwwroot\img\anasayfa.jpg
+wwwroot\img\bokshoca.jpg
+wwwroot\img\danshoca.jpg
+wwwroot\img\fitneeshoca.jpg
 wwwroot\img\haber1.jpg
 wwwroot\img\haber2.jpg
 wwwroot\img\haber3.jpg
@@ -13,7 +17,9 @@ wwwroot\img\hakkında3.jpg
 wwwroot\img\hakkında4.jpg
 wwwroot\img\hakkındaekip.jpg
 wwwroot\img\layout.png
+wwwroot\img\yogahoca.jpg
 wwwroot\js\Hesap.js
+wwwroot\js\RandevuAl.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
