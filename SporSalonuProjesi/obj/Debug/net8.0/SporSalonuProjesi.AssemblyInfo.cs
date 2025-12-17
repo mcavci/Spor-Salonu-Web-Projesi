@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SporSalonuProjesi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19ec5030a372aa06f9bc8e09a9e2595c94929260")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c74ad15d7400ddfbaa219e9377c41d76b2d57f4c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SporSalonuProjesi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SporSalonuProjesi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

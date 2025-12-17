@@ -1,8 +1,8 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Hoca veya Tarih deðiþtiðinde bu fonksiyon çalýþýr
-    $("#drpEgitmen, #dtpTarih").change(function() {
+    $("#drpEgitmen, #dtpTarih").change(function () {
 
         var secilenHoca = $("#drpEgitmen").val();
         var secilenTarih = $("#dtpTarih").val();
@@ -12,9 +12,9 @@ $(document).ready(function() {
         if (secilenHoca && secilenTarih) {
 
             // 1. Kullanýcý beklerken bilgi ver
-            saatDropdown.empty(); 
+            saatDropdown.empty();
             saatDropdown.append('<option value="">Saatler Hesaplanýyor...</option>');
-            saatDropdown.prop('disabled', true); 
+            saatDropdown.prop('disabled', true);
 
 
             // 2. Sunucuya (Controller'a) sor
@@ -22,15 +22,15 @@ $(document).ready(function() {
                 url: '/Randevu/GetMusaitSaatler',
                 type: 'GET',
                 data: { egitmenId: secilenHoca, tarih: secilenTarih },
-                success: function(gelenSaatler) {
+                success: function (gelenSaatler) {
 
                     saatDropdown.prop('disabled', false); // Kilidi aç
                     saatDropdown.empty();
                     saatDropdown.append('<option value="">-- Musait Saati Seciniz --</option>');
 
-                    
+
                     if (gelenSaatler.length > 0) {
-                        $.each(gelenSaatler, function(index, saat) {
+                        $.each(gelenSaatler, function (index, saat) {
                             saatDropdown.append($('<option></option>').val(saat).html(saat));
                         });
                     } else {
@@ -38,7 +38,7 @@ $(document).ready(function() {
                         saatDropdown.append('<option value="">Bu tarihte tüm saatler DOLU!</option>');
                     }
                 },
-                error: function() {
+                error: function () {
                     alert("Saatler getirilirken bir hata oluþtu! Lütfen sayfayý yenileyin.");
                     saatDropdown.empty();
                     saatDropdown.append('<option value="">Baðlantý Hatasý</option>');
@@ -47,7 +47,7 @@ $(document).ready(function() {
             });
         }
         else {
-         
+
             saatDropdown.empty();
             saatDropdown.append('<option value="">-- Once Egitmen ve Tarih Seciniz --</option>');
         }
