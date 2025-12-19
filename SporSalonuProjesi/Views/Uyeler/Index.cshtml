@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Üye Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container-fluid py-4">
@@ -25,6 +26,7 @@
                             <th class="py-3">Email</th>
                             <th class="py-3">Telefon</th>
                             <th class="py-3">Fiziksel (Boy/Kilo)</th>
+                            <th class="py-3">Üyelik Paketi</th>
                             <th class="py-3">Kayıt Tarihi</th>
                             <th class="py-3">Eğitmen</th>
                             <th class="py-3 text-end pe-4">İşlemler</th>
@@ -42,6 +44,18 @@
                                 <td>
                                     <span class="badge bg-light text-dark border">@item.Boy cm</span>
                                     <span class="badge bg-light text-dark border">@item.Kilo kg</span>
+                                </td>
+                                <td>
+                                    @if (item.Paket != null)
+                                    {
+                                        <span class="badge bg-info text-dark bg-opacity-25 border border-info">
+                                            <i class="fas fa-box-open me-1"></i> @item.Paket.PaketAdi
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">- Paket Yok -</span>
+                                    }
                                 </td>
                                 <td>@item.KayitTarihi.ToString("dd.MM.yyyy")</td>
                                 <td>

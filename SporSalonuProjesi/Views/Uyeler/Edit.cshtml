@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Üye Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container mt-4">
@@ -81,6 +82,13 @@
                                         </div>
                                         <span asp-validation-for="Kilo" class="text-danger"></span>
                                     </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="PaketId" class="form-label fw-bold">Üyelik Paketi</label>
+                                    <select asp-for="PaketId" class="form-select" asp-items="ViewBag.PaketId">
+                                        <option value="">-- Paket Seç --</option>
+                                    </select>
+                                    <span asp-validation-for="PaketId" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">

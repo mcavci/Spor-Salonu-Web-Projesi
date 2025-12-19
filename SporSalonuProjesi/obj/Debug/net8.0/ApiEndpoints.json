@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "ContainingType": "SporSalonuProjesi.Controllers.SporApiController",
+    "Method": "GetAdminGrafikVerileri",
+    "RelativePath": "api/SporApi/admin-grafik-verileri",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SporSalonuProjesi.Controllers.SporApiController",
+    "Method": "GetDersler",
+    "RelativePath": "api/SporApi/dersler",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SporSalonuProjesi.Controllers.SporApiController",
+    "Method": "GetDolulukDurumu",
+    "RelativePath": "api/SporApi/doluluk",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "year",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SporSalonuProjesi.Controllers.SporApiController",
+    "Method": "PaketSec",
+    "RelativePath": "api/SporApi/paket-sec",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "uyeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "paketId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SporSalonuProjesi.Controllers.SporApiController",
+    "Method": "GetPaketler",
+    "RelativePath": "api/SporApi/paketler",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

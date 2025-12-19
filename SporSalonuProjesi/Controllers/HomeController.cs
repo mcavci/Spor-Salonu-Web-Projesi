@@ -137,66 +137,6 @@ namespace SporSalonuProjesi.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [HttpGet]
-        public IActionResult GetDolulukDurumu(int year, int month)
-        {
-            // 1. Ayın başını ve sonunu belirle
-            DateTime baslangic = new DateTime(year, month, 1);
-            DateTime bitis = baslangic.AddMonths(1).AddDays(-1).AddHours(23).AddMinutes(59);
-
-            // 2. VERİTABANINDAN SADECE SAATLERİ ÇEK 
-            // .ToList() diyerek veriyi önce hafızaya alıyoruz 
-            var hamVeriler = _context.Randevular
-                                     .Select(r => r.Saat)
-                                     .ToList();
-
-            // 3. HAFIZADA FİLTRELEME VE SAYIM YAP
-            var gunlukSayimlar = hamVeriler
-                .Select(tarihString => DateTime.Parse(tarihString))
-                .Where(tarih => tarih >= baslangic && tarih <= bitis)
-                .GroupBy(x => x.Day)
-                .Select(g => new
-                {
-                    Gun = g.Key,
-                    Sayi = g.Count()
-                })
-                .ToList();
-
-
-            var sonucListesi = new List<object>();
-            int oAydakiGunSayisi = DateTime.DaysInMonth(year, month);
-
-            for (int i = 1; i <= oAydakiGunSayisi; i++)
-            {
-                var kayit = gunlukSayimlar.FirstOrDefault(x => x.Gun == i);
-                int randevuSayisi = kayit != null ? kayit.Sayi : 0;
-
-                string durum = "MÜSAİT";
-                string renk = "bg-success";
-
-
-                if (randevuSayisi >= 15)
-                {
-                    durum = "DOLU";
-                    renk = "bg-danger";
-                }
-                else if (randevuSayisi >= 8)
-                {
-                    durum = "YOĞUN";
-                    renk = "bg-warning text-dark";
-                }
-
-                sonucListesi.Add(new
-                {
-                    gun = i,
-                    durum = durum,
-                    renk = renk,
-                    sayi = randevuSayisi
-                });
-            }
-
-            return Json(sonucListesi);
-        }
 
     }
 }

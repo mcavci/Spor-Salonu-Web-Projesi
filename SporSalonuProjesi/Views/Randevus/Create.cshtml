@@ -1,65 +1,83 @@
 ﻿@model SporSalonuProjesi.Models.Randevu
 
 @{
-    ViewData["Title"] = "Randevu Oluştur";
+    ViewData["Title"] = "Admin - Randevu Oluştur";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i> Yeni Randevu Kaydı</h4>
+        </div>
+        <div class="card-body p-4">
 
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Randevu Oluştur</h4>
+            <form asp-action="Create" id="adminRandevuForm">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                @if (ViewBag.Hata != null)
+                {
+                    <div class="alert alert-warning border-warning text-dark">
+                        <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.Hata
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Hangi Üye İçin?</label>
+                        <select asp-for="UyeId" class="form-select" asp-items="ViewBag.UyeListesi">
+                            <option value="">-- Üye Seçiniz --</option>
+                        </select>
+                        <span asp-validation-for="UyeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Eğitmen</label>
+                        <select asp-for="EgitmenId" class="form-select" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
+                            <option value="">-- Eğitmen Seçiniz --</option>
+                        </select>
+                        <span asp-validation-for="EgitmenId" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="card-body">
 
-                    <form asp-action="Create">
-                        <input type="hidden" asp-for="UyeId" />
-                        <input type="hidden" asp-for="Durum" value="Onay Bekliyor" />
-                        <input type="hidden" asp-for="RandevuId" />
-                        <input type="hidden" asp-for="UyeAdSoyad" />
-                        <input type="hidden" asp-for="EgitmenAdi" />
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Tarih</label>
+                        <input asp-for="Tarih" type="date" class="form-control" id="dtpTarih" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Tarih" class="text-danger"></span>
+                    </div>
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Saat</label>
 
-                        @if (ViewBag.Hata != null)
-                        {
-                            <div class="alert alert-warning">@ViewBag.Hata</div>
-                        }
+                        <select asp-for="Saat" class="form-select" id="drpSaat" disabled
+                                data-url="@Url.Action("GetMusaitSaatler", "Randevus", new { area = "Admin" })">
+                            <option value="">Önce Eğitmen ve Tarih Seçiniz</option>
+                        </select>
 
-                        <div class="mb-3">
-                            <label class="form-label">Eğitmen</label>
-                            <select asp-for="EgitmenId" class="form-select" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
-                                <option value="">Seçiniz...</option>
-                            </select>
-                            <span asp-validation-for="EgitmenId" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tarih</label>
-                            <input asp-for="Tarih" type="date" class="form-control" id="dtpTarih" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                            <span asp-validation-for="Tarih" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Saat</label>
-                            <select asp-for="Saat" class="form-select" id="drpSaat">
-                                <option value="">Önce Eğitmen ve Tarih Seçin</option>
-                            </select>
-                            <span asp-validation-for="Saat" class="text-danger"></span>
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Randevuyu Kaydet</button>
-                            <a asp-action="Index" class="btn btn-secondary">İptal</a>
-                        </div>
-
-                    </form>
-
+                        <span asp-validation-for="Saat" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
 
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Randevu Durumu</label>
+                    <select asp-for="Durum" class="form-select">
+                        <option value="Onaylandı">Onaylandı</option>
+                        <option value="Onay Bekliyor">Onay Bekliyor</option>
+                    </select>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-secondary px-4">İptal</a>
+                    <button type="submit" class="btn btn-success px-5 fw-bold">
+                        <i class="fas fa-save me-2"></i> Kaydet
+                    </button>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
@@ -69,5 +87,5 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script src="~/js/RandevuAl.js"></script>
+    <script src="~/js/RandevuAlAdmin.js"></script>
 }

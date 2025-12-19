@@ -11,6 +11,7 @@ namespace SporSalonuProjesi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
             migrationBuilder.CreateTable(
                 name: "Adminler",
                 columns: table => new
@@ -24,7 +25,7 @@ namespace SporSalonuProjesi.Migrations
                 {
                     table.PrimaryKey("PK_Adminler", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "Egitmenler",
                 columns: table => new

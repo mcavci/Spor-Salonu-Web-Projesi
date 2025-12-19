@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Filters; 
+using Microsoft.AspNetCore.Mvc.Filters;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
 
@@ -16,9 +16,9 @@ namespace SporSalonuProjesi.Controllers
         public PaketsController(AppDbContext context)
         {
             _context = context;
-        }      
-        // Bu blok, alttaki Index, Create, Edit  çalışmadan ÖNCE devreye girer.
-        // Admin oturumu yoksa kapıdan içeri sokmaz.
+        }
+
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (HttpContext.Session.GetString("AdminOturumu") == null)
@@ -26,11 +26,11 @@ namespace SporSalonuProjesi.Controllers
                 context.Result = new RedirectToActionResult("Login", "Admin", null);
             }
             base.OnActionExecuting(context);
-        }     
+        }
         // GET: Pakets
         public async Task<IActionResult> Index()
         {
-           
+
             return View(await _context.Paketler.ToListAsync());
         }
 

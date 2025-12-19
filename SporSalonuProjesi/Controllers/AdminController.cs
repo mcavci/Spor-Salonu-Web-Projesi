@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
-using System.Collections.Generic; 
-using System.Linq; 
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SporSalonuProjesi.Controllers
 {
@@ -32,8 +32,8 @@ namespace SporSalonuProjesi.Controllers
 
             if (admin != null)
             {
-                
-                HttpContext.Session.SetString("AdminOturumu", kadi); 
+
+                HttpContext.Session.SetString("AdminOturumu", kadi);
                 return RedirectToAction("Index");
             }
 
@@ -57,7 +57,7 @@ namespace SporSalonuProjesi.Controllers
             ViewBag.ToplamEgitmen = _context.Egitmenler.Count();
             ViewBag.ToplamPaket = _context.Paketler.Count();
             ViewBag.ToplamUye = _context.Uyeler.Count();
-         
+
             // 3. Tablo Verisi (Bekleyen Randevular)
             var bekleyenRandevular = _context.Randevular
                                     .Where(x => x.Durum == "Onay Bekliyor")
@@ -113,13 +113,13 @@ namespace SporSalonuProjesi.Controllers
         public IActionResult Logout()
         {
             // tüm oturumu temizle
-            HttpContext.Session.Clear();       
+            HttpContext.Session.Clear();
             if (Request.Cookies["AdminOturumu"] != null)
             {
                 Response.Cookies.Delete("AdminOturumu");
             }
 
-            
+
             return RedirectToAction("Login", "Admin");
         }
     }

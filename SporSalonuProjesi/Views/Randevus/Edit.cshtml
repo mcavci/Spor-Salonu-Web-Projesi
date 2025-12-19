@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Randevu Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; 
 }
 
 <div class="container mt-4">
@@ -15,52 +16,59 @@
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="RandevuId" />
+                <input type="hidden" asp-for="UyeAdSoyad" />
+                <input type="hidden" asp-for="EgitmenAdi" />
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label asp-for="RandevuId" class="form-label fw-bold"></label>
-                            <input asp-for="RandevuId" class="form-control bg-light" readonly />
-                            <span asp-validation-for="RandevuId" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="UyeId" class="form-label fw-bold"></label>
-                            <input asp-for="UyeId" class="form-control" />
+                            <label class="form-label fw-bold">Üye Seçimi</label>
+                            <select asp-for="UyeId" class="form-select" asp-items="ViewBag.UyeListesi">
+                                <option value="">-- Üye Seçiniz --</option>
+                            </select>
                             <span asp-validation-for="UyeId" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="UyeAdSoyad" class="form-label fw-bold"></label>
-                            <input asp-for="UyeAdSoyad" class="form-control" />
-                            <span asp-validation-for="UyeAdSoyad" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="EgitmenAdi" class="form-label fw-bold"></label>
-                            <input asp-for="EgitmenAdi" class="form-control" />
-                            <span asp-validation-for="EgitmenAdi" class="text-danger"></span>
+                            <label class="form-label fw-bold">Eğitmen</label>
+                            <select asp-for="EgitmenId" class="form-select" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
+                                <option value="">-- Eğitmen Seçiniz --</option>
+                            </select>
+                            <span asp-validation-for="EgitmenId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label asp-for="Durum" class="form-label fw-bold"></label>
-                            <input asp-for="Durum" class="form-control" placeholder="Örn: Aktif/Pasif" />
-                            <span asp-validation-for="Durum" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
                             <label asp-for="Tarih" class="form-label fw-bold"></label>
-                            <input asp-for="Tarih" type="date" class="form-control" />
+                            <input asp-for="Tarih" type="date" class="form-control" id="dtpTarih" />
                             <span asp-validation-for="Tarih" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Saat" class="form-label fw-bold"></label>
-                            <input asp-for="Saat" type="time" class="form-control" />
+
+                            <select asp-for="Saat" class="form-select" id="drpSaat"
+                                    data-url="@Url.Action("GetMusaitSaatler", "Randevu", new { area = "Admin" })">
+
+                                <option value="@Model.Saat" selected>@Model.Saat (Şu anki)</option>
+                                <option disabled>──────────</option>
+                                <option value="">Değiştirmek için Tarih/Eğitmen seçin...</option>
+                            </select>
+
                             <span asp-validation-for="Saat" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Durum" class="form-label fw-bold"></label>
+                            <select asp-for="Durum" class="form-select">
+                                <option value="Onaylandı">Onaylandı</option>
+                                <option value="Onay Bekliyor">Onay Bekliyor</option>
+                                <option value="İptal Edildi">İptal Edildi</option>
+                                <option value="Tamamlandı">Tamamlandı</option>
+                            </select>
+                            <span asp-validation-for="Durum" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -84,4 +92,6 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script src="~/js/RandevuAlAdmin.js"></script>
 }

@@ -1,10 +1,13 @@
+wwwroot\css\AdminLogin.css
 wwwroot\css\hakkında.css
 wwwroot\css\Hesap.css
 wwwroot\css\Hoca.css
 wwwroot\css\profil.css
+wwwroot\css\saglık.css
 wwwroot\css\site.css
 wwwroot\css\İletişim.css
 wwwroot\favicon.ico
+wwwroot\img\Admin.png
 wwwroot\img\anasayfa.jpg
 wwwroot\img\bokshoca.jpg
 wwwroot\img\danshoca.jpg
@@ -18,9 +21,7 @@ wwwroot\img\hakkında4.jpg
 wwwroot\img\hakkındaekip.jpg
 wwwroot\img\layout.png
 wwwroot\img\yogahoca.jpg
-wwwroot\js\Hesap.js
-wwwroot\js\RandevuAl.js
-wwwroot\js\site.js
+wwwroot\js\RandevuAlAdmin.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -78,3 +79,6 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\js\Hesap.js
+wwwroot\js\RandevuAl.js
+wwwroot\js\site.js

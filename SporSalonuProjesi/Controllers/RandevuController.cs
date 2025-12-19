@@ -15,38 +15,34 @@ public class RandevuController : Controller
     {
         _context = context;
     }
-   
-   
-  
+
     [HttpGet]
     public JsonResult GetMusaitSaatler(int egitmenId, DateTime tarih)
     {
-        
+
         var kultur = new System.Globalization.CultureInfo("tr-TR");
         string secilenGunAdi = kultur.DateTimeFormat.GetDayName(tarih.DayOfWeek);
         secilenGunAdi = char.ToUpper(secilenGunAdi[0]) + secilenGunAdi.Substring(1);
 
-        // 2. Hocanın o gündeki derslerini çek
         var gunlukDersler = _context.Dersler
                                 .Where(x => x.EgitmenId == egitmenId && x.Gun == secilenGunAdi)
                                 .ToList();
 
         var musaitSaatler = new List<string>();
 
-        // 3. Tek tek dersleri kontrol et: Dolu mu?
         foreach (var ders in gunlukDersler)
         {
             string dersSaati = ders.BaslangicSaati.ToString(@"hh\:mm");
 
-            // O saatte kaç kişi kayıtlı?
+
             int icerdekiKisiSayisi = _context.Randevular.Count(r =>
                 r.EgitmenId == egitmenId &&
                 r.Tarih.Date == tarih.Date &&
-                r.Saat == dersSaati && 
+                r.Saat == dersSaati &&
                 r.Durum != "İptal");
 
-            //    KONTENJAN KONTROLÜ BURADA 
-        
+
+
             if (icerdekiKisiSayisi < ders.Kontenjan)
             {
                 musaitSaatler.Add(dersSaati);
@@ -63,7 +59,7 @@ public class RandevuController : Controller
         var sessionVerisi = HttpContext.Session.GetString("AktifKullanici");
         if (string.IsNullOrEmpty(sessionVerisi)) return RedirectToAction("Hesap", "Login");
 
-        // --- 1. SEÇİLİ HOCAYI BULMA ---
+
         int? seciliHocaId = null;
         if (!string.IsNullOrEmpty(hocaAdi))
         {
@@ -71,34 +67,34 @@ public class RandevuController : Controller
             if (hoca != null) seciliHocaId = hoca.Id;
         }
 
-        //      . HOCA BELLİYSE BUGÜNÜN BOŞ SAATLERİNİ GETİR    
+
         List<string> musaitSaatler = new List<string>();
 
         if (seciliHocaId != null)
         {
             DateTime bugun = DateTime.Today;
-                  
+
             var kultur = new System.Globalization.CultureInfo("tr-TR");
-            string turkceGun = kultur.DateTimeFormat.GetDayName(bugun.DayOfWeek);           
+            string turkceGun = kultur.DateTimeFormat.GetDayName(bugun.DayOfWeek);
             turkceGun = char.ToUpper(turkceGun[0]) + turkceGun.Substring(1);
-          
-            // a) Ders Programını Çek
+
+
             var dersProgrami = _context.Dersler
                                     .Where(d => d.EgitmenId == seciliHocaId && d.Gun == turkceGun)
                                     .ToList();
 
-            // b) Dolu Randevuları Çek
+
             var doluRandevular = _context.Randevular
                                      .Where(r => r.EgitmenId == seciliHocaId && r.Tarih.Date == bugun)
                                      .Select(r => r.Saat)
                                      .ToList();
 
-            // c) Eşleştirme Yap
+
             foreach (var ders in dersProgrami)
             {
                 string saatFormat = ders.BaslangicSaati.ToString(@"hh\:mm");
 
-                // Eğer saat dolu DEĞİLSE listeye ekle
+
                 if (!doluRandevular.Contains(saatFormat))
                 {
                     musaitSaatler.Add(saatFormat + " - " + ders.DersAdi);
@@ -106,7 +102,7 @@ public class RandevuController : Controller
             }
         }
 
-        //        VERİLERİ VİEW'A GÖNDERME    
+
 
         ViewBag.MusaitSaatler = new SelectList(musaitSaatler);
         ViewBag.EgitmenListesi = new SelectList(_context.Egitmenler.ToList(), "Id", "AdSoyad", seciliHocaId);
@@ -128,17 +124,16 @@ public class RandevuController : Controller
             return RedirectToAction("Hesap", "Login");
         }
 
-       
-        // Formdan gelmeyen ama Modelde zorunlu olan alanların hatasını siliyoruz.
+
         randevu.UyeId = sessionUyeId;
 
-        ModelState.Remove("UyeId");      // Üye ID boş olamaz
-        ModelState.Remove("UyeAdSoyad"); // Ad Soyad alanı zorunludur
-        ModelState.Remove("EgitmenAdi"); // Eğitmen seçimi yapılmadı 
-        ModelState.Remove("Egitmen");    // İlişkili tablo
-        ModelState.Remove("Uye");        // İlişkili tablo
-        ModelState.Remove("Durum");      
-                                        
+        ModelState.Remove("UyeId");
+        ModelState.Remove("UyeAdSoyad");
+        ModelState.Remove("EgitmenAdi");
+        ModelState.Remove("Egitmen");
+        ModelState.Remove("Uye");
+        ModelState.Remove("Durum");
+
 
         var uye = await _context.Uyeler
             .Include(u => u.Paket)
@@ -251,34 +246,34 @@ public class RandevuController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-       
+
         var sessionVerisi = HttpContext.Session.GetString("AktifKullanici");
         if (string.IsNullOrEmpty(sessionVerisi)) return RedirectToAction("Hesap", "Login");
 
         var aktifUye = JsonSerializer.Deserialize<Uye>(sessionVerisi);
         string stringId = aktifUye.UyeId.ToString();
 
-      
+
         var kullaniciRandevulari = _context.Randevular
                                         .Where(x => x.UyeId == stringId)
                                         .OrderByDescending(x => x.Tarih)
                                         .ToList();
 
-       
+
         foreach (var randevu in kullaniciRandevulari)
         {
-           
+
             if (randevu.Tarih.Date == DateTime.Today &&
                 randevu.Durum != "İptal" &&
                 randevu.Durum != "Tamamlandı")
             {
-               
+
                 if (TimeSpan.TryParse(randevu.Saat, out TimeSpan dersSaati))
                 {
                     DateTime dersZamani = DateTime.Today.Add(dersSaati);
                     TimeSpan kalanSure = dersZamani - DateTime.Now;
 
-                    
+
                     if (kalanSure.TotalMinutes > 0 && kalanSure.TotalHours <= 2)
                     {
                         ViewBag.Uyari = $"🔔 HATIRLATMA: {randevu.EgitmenAdi} ile dersiniz yaklaşık {kalanSure.Hours} saat {kalanSure.Minutes} dakika sonra başlayacak!";

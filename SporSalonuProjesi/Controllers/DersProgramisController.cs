@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters; 
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using SporSalonuProjesi.Data;
+using SporSalonuProjesi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Filters; // Güvenlik Bekçisi İçin
-using SporSalonuProjesi.Data;
-using SporSalonuProjesi.Models;
 
 namespace SporSalonuProjesi.Controllers
 {
+
     public class DersProgramisController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,16 +22,15 @@ namespace SporSalonuProjesi.Controllers
             _context = context;
         }
         //  GÜVENLİK KİLİDİ (SADECE ADMİN GİREBİLİR)
-      
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (HttpContext.Session.GetString("AdminOturumu") == null)
+            if (HttpContext.Session.GetString("AdminOturumu") == null && context.ActionDescriptor.RouteValues["action"] != "Create")
             {
                 context.Result = new RedirectToActionResult("Login", "Admin", null);
             }
-            base.OnActionExecuting(context);
+
         }
- 
+
         // GET: DersProgramis
         public async Task<IActionResult> Index()
         {
@@ -61,17 +62,19 @@ namespace SporSalonuProjesi.Controllers
         // POST: DersProgramis/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Gun,BaslangicSaati,BitisSaati,DersAdi,EgitmenId,Kontenjan")] DersProgrami dersProgrami)
+        public async Task<IActionResult> Create(DersProgrami dersProgrami)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(dersProgrami);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["EgitmenId"] = new SelectList(_context.Egitmenler, "Id", "AdSoyad");
+                return View(dersProgrami);
             }
-            ViewData["EgitmenId"] = new SelectList(_context.Egitmenler, "Id", "AdSoyad", dersProgrami.EgitmenId);
-            return View(dersProgrami);
+
+            _context.Dersler.Add(dersProgrami);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
+
 
         // GET: DersProgramis/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -101,7 +104,7 @@ namespace SporSalonuProjesi.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                   
+
                     if (!DersProgramiExists(dersProgrami.Id)) return NotFound();
                     else throw;
                 }
@@ -139,7 +142,7 @@ namespace SporSalonuProjesi.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+
         private bool DersProgramiExists(int id)
         {
             return _context.Dersler.Any(e => e.Id == id);

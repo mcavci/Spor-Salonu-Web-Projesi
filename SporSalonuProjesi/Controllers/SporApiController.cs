@@ -114,11 +114,11 @@ namespace SporSalonuProjesi.Controllers
         {
             var bugun = DateTime.Now;
 
-            // --- 1. AYLIK KAZANÇ GRAFİĞİ HESAPLAMASI ---
+            // 1. AYLIK KAZANÇ GRAFİĞİ HESAPLAMASI 
             var aylarListesi = new List<string>();
             var kazancListesi = new List<decimal>();
 
-            // Son 6 ayın verisini çekmek için genel bir sorgu (Hepsini tek tek çekmekten iyidir)
+
             var hamVeri = _context.Uyeler
                 .Include(u => u.Paket)
                 .Where(u => u.KayitTarihi >= bugun.AddMonths(-6))
@@ -138,9 +138,9 @@ namespace SporSalonuProjesi.Controllers
                 kazancListesi.Add(oAyinKazanci);
             }
 
-            // --- 2. HOCA TERCİH GRAFİĞİ HESAPLAMASI ---
+            // 2. HOCA TERCİH GRAFİĞİ HESAPLAMASI
             var hocaAnalizi = _context.Randevular
-            .Where(r => r.Durum == "Onaylandı")  
+            .Where(r => r.Durum == "Onaylandı")
             .GroupBy(r => r.EgitmenAdi)
             .Select(g => new { HocaAdi = g.Key, Sayi = g.Count() })
             .ToList();
@@ -149,7 +149,7 @@ namespace SporSalonuProjesi.Controllers
             var hocaSayilari = hocaAnalizi.Select(x => x.Sayi).ToList();
 
 
-            // PAKET DAĞILIMI (Hangi paketten kaç tane var?) ---
+            // PAKET DAĞILIMI (Hangi paketten kaç tane var?)
             var paketAnalizi = _context.Uyeler
                 .Include(u => u.Paket)
                 .GroupBy(u => u.Paket.PaketAdi)
@@ -160,13 +160,12 @@ namespace SporSalonuProjesi.Controllers
             var paketSayilari = paketAnalizi.Select(x => x.Sayi).ToList();
 
 
-            //  SAATLİK YOĞUNLUK (Hangi saatte kaç randevu var?) ---
-            // Sadece onaylı randevuların saatlerine bakıyoruz
+            //  SAATLİK YOĞUNLUK (Hangi saatte kaç randevu var?)
             var saatAnalizi = _context.Randevular
                 .Where(r => r.Durum == "Onaylandı")
-                .AsEnumerable() // Saat string ise bellekte işlem yapmak daha güvenli olabilir
-                .GroupBy(r => r.Saat) // Örn: "14:00", "15:00" gibi gruplar
-                .OrderBy(g => g.Key)  // Sabah saatlerinden akşama doğru sırala
+                .AsEnumerable()
+                .GroupBy(r => r.Saat)
+                .OrderBy(g => g.Key)
                 .Select(g => new { Saat = g.Key, Sayi = g.Count() })
                 .ToList();
 
@@ -174,16 +173,14 @@ namespace SporSalonuProjesi.Controllers
             var saatYogunluklari = saatAnalizi.Select(x => x.Sayi).ToList();
 
 
-            // Return kısmına yenilerini de ekliyoruz
+
             return Ok(new
             {
-                // Eskiler
+
                 aylar = aylarListesi,
                 kazancData = kazancListesi,
                 hocaIsim = hocaIsimleri,
                 hocaSayi = hocaSayilari,
-
-                // Yeniler
                 paketIsim = paketIsimleri,
                 paketSayi = paketSayilari,
                 saatler = saatler,

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Yeni Üye Kaydı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container py-5">
@@ -96,6 +97,13 @@
                                 <label asp-for="KayitTarihi" class="form-label fw-bold small">Kayıt Tarihi</label>
                                 <input asp-for="KayitTarihi" type="datetime-local" class="form-control bg-light border-0" />
                                 <span asp-validation-for="KayitTarihi" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="PaketId" class="form-label fw-bold small">Üyelik Paketi</label>
+                                <select asp-for="PaketId" class="form-select bg-light border-0" asp-items="ViewBag.PaketId">
+                                    <option value="">-- Paket Seçiniz --</option>
+                                </select>
+                                <span asp-validation-for="PaketId" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="EgitmenId" class="form-label fw-bold small">Atanacak Eğitmen</label>

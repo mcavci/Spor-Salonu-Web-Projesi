@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Filters; 
+using Microsoft.AspNetCore.Mvc.Filters;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Filters; // Bekçi için şart
+using Microsoft.AspNetCore.Mvc.Filters;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
 
@@ -18,9 +18,9 @@ namespace SporSalonuProjesi.Controllers
         public UyelerController(AppDbContext context)
         {
             _context = context;
-        }  
-        // Bu kod sayesinde Admin olmayan kimse Create, Edit, Index hiçbirine giremez.
-        // Tek tek if yazmaktan kurtulduk.
+        }
+
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (HttpContext.Session.GetString("AdminOturumu") == null)
@@ -29,13 +29,11 @@ namespace SporSalonuProjesi.Controllers
             }
             base.OnActionExecuting(context);
         }
-    
-
 
         // GET: Uyeler
         public async Task<IActionResult> Index()
         {
-          
+
             var appDbContext = _context.Uyeler
                                        .Include(u => u.Egitmen)
                                        .Include(u => u.Paket);
@@ -50,7 +48,7 @@ namespace SporSalonuProjesi.Controllers
 
             var uye = await _context.Uyeler
                 .Include(u => u.Egitmen)
-                .Include(u => u.Paket) 
+                .Include(u => u.Paket)
                 .FirstOrDefaultAsync(m => m.UyeId == id);
 
             if (uye == null) return NotFound();
@@ -71,6 +69,9 @@ namespace SporSalonuProjesi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Uye uye)
         {
+            ModelState.Remove("Paket");
+            ModelState.Remove("Egitmen");
+
             if (ModelState.IsValid)
             {
                 _context.Add(uye);
@@ -78,7 +79,9 @@ namespace SporSalonuProjesi.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EgitmenId"] = new SelectList(_context.Egitmenler, "Id", "AdSoyad", uye.EgitmenId);
+
             ViewData["PaketId"] = new SelectList(_context.Paketler, "PaketId", "PaketAdi", uye.PaketId);
+
             return View(uye);
         }
 

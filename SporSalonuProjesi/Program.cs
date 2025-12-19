@@ -42,7 +42,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                 maxRetryDelay: TimeSpan.FromSeconds(10),
                 errorNumbersToAdd: null);
         }));
-//builder.Services.AddHostedService<RandevuTemizlemeServisi>();
+builder.Services.AddHostedService<RandevuTemizlemeServisi>();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

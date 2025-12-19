@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SporSalonuProjesi.Data;
 using SporSalonuProjesi.Models;
+using System;
 
 
 namespace SporSalonuProjesi.Controllers
@@ -15,16 +16,13 @@ namespace SporSalonuProjesi.Controllers
         {
             _context = context;
         }
-
         // GET: Egitmen1
-        // Herkes görebilir
         public async Task<IActionResult> Index()
         {
             return View(await _context.Egitmenler.ToListAsync());
         }
 
         // GET: Egitmen1/Details/5
-        // Herkes detaylara bakabilir
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -35,25 +33,25 @@ namespace SporSalonuProjesi.Controllers
             return View(egitmen);
         }
 
-        // GET: Egitmen1/Create
+
+        // GET: Egitmen1/Create (SAYFAYI AÇAR)
         public IActionResult Create()
         {
-            
-            // Eğer Admin girişi yoksa Login'e git
+
             if (HttpContext.Session.GetString("AdminOturumu") == null)
             {
+
                 return RedirectToAction("Login", "Admin");
             }
-
             return View();
         }
 
-        // POST: Egitmen1/Create
+        // POST: Egitmen1/Create (KAYDETME İŞLEMİ)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AdSoyad,Uzmanlik,Aciklama,FotoUrl,Instagram")] Egitmen egitmen)
         {
-            // OTURUM KONTROLÜ
+            // Oturum Kontrolü
             if (HttpContext.Session.GetString("AdminOturumu") == null) return RedirectToAction("Login", "Admin");
 
             if (ModelState.IsValid)
@@ -68,7 +66,7 @@ namespace SporSalonuProjesi.Controllers
         // GET: Egitmen1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            // OTURUM KONTROLÜ
+
             if (HttpContext.Session.GetString("AdminOturumu") == null) return RedirectToAction("Login", "Admin");
 
             if (id == null) return NotFound();
@@ -84,7 +82,7 @@ namespace SporSalonuProjesi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,AdSoyad,Uzmanlik,Aciklama,FotoUrl,Instagram")] Egitmen egitmen)
         {
-            // OTURUM KONTROLÜ
+
             if (HttpContext.Session.GetString("AdminOturumu") == null) return RedirectToAction("Login", "Admin");
 
             if (id != egitmen.Id) return NotFound();
@@ -109,7 +107,7 @@ namespace SporSalonuProjesi.Controllers
         // GET: Egitmen1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            // OTURUM KONTROLÜ
+
             if (HttpContext.Session.GetString("AdminOturumu") == null) return RedirectToAction("Login", "Admin");
 
             if (id == null) return NotFound();
@@ -125,7 +123,7 @@ namespace SporSalonuProjesi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            // OTURUM KONTROLÜ (Silme işlemi için de şart)
+
             if (HttpContext.Session.GetString("AdminOturumu") == null) return RedirectToAction("Login", "Admin");
 
             var egitmen = await _context.Egitmenler.FindAsync(id);
