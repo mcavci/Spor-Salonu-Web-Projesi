@@ -7,117 +7,93 @@
 
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-9 col-xl-8">
 
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="card-header bg-primary text-white p-4">
-                    <h4 class="fw-bold mb-0">
+
+                <!-- HEADER -->
+                <div class="card-header bg-primary bg-gradient text-white p-4">
+                    <h4 class="fw-bold mb-1">
                         <i class="fas fa-user-plus me-2"></i> Yeni Üye Kayıt Formu
                     </h4>
-                    <p class="mb-0 opacity-75 small">Lütfen üye bilgilerini eksiksiz doldurunuz.</p>
+                    <small class="opacity-75">
+                        Lütfen üye bilgilerini eksiksiz doldurunuz
+                    </small>
                 </div>
 
                 <div class="card-body p-5">
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        <h6 class="text-muted text-uppercase fw-bold mb-3 font-size-sm">
-                            <i class="fas fa-id-card me-2"></i> Kimlik Bilgileri
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger small"></div>
+
+                        <!-- KİMLİK -->
+                        <h6 class="fw-bold mb-3">
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">
+                                <i class="fas fa-id-card me-1"></i> Kimlik Bilgileri
+                            </span>
                         </h6>
-                        <div class="row g-3 mb-4">
+
+                        <div class="row g-4 mb-4">
                             <div class="col-md-6">
-                                <label asp-for="Ad" class="form-label fw-bold small">Ad</label>
-                                <input asp-for="Ad" class="form-control form-control-lg bg-light border-0" placeholder="Örn: Ahmet" />
+                                <label asp-for="Ad" class="form-label small fw-semibold">Ad</label>
+                                <input asp-for="Ad" class="form-control form-control-lg bg-light border-0 rounded-3 shadow-sm" />
                                 <span asp-validation-for="Ad" class="text-danger small"></span>
                             </div>
+
                             <div class="col-md-6">
-                                <label asp-for="Soyad" class="form-label fw-bold small">Soyad</label>
-                                <input asp-for="Soyad" class="form-control form-control-lg bg-light border-0" placeholder="Örn: Yılmaz" />
+                                <label asp-for="Soyad" class="form-label small fw-semibold">Soyad</label>
+                                <input asp-for="Soyad" class="form-control form-control-lg bg-light border-0 rounded-3 shadow-sm" />
                                 <span asp-validation-for="Soyad" class="text-danger small"></span>
                             </div>
                         </div>
 
-                        <h6 class="text-muted text-uppercase fw-bold mb-3 font-size-sm border-top pt-3">
-                            <i class="fas fa-address-book me-2"></i> İletişim & Güvenlik
+                        <!-- İLETİŞİM -->
+                        <h6 class="fw-bold mb-3">
+                            <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">
+                                <i class="fas fa-address-book me-1"></i> İletişim & Güvenlik
+                            </span>
                         </h6>
-                        <div class="row g-3 mb-3">
+
+                        <div class="row g-4 mb-4">
                             <div class="col-md-6">
-                                <label asp-for="Email" class="form-label fw-bold small">E-Posta</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-0 bg-light"><i class="fas fa-envelope text-secondary"></i></span>
-                                    <input asp-for="Email" type="email" class="form-control form-control-lg bg-light border-0" placeholder="ornek@email.com" />
+                                <label asp-for="Email" class="form-label small fw-semibold">E-Posta</label>
+                                <div class="input-group shadow-sm">
+                                    <span class="input-group-text bg-light border-0">
+                                        <i class="fas fa-envelope text-secondary"></i>
+                                    </span>
+                                    <input asp-for="Email" type="email" class="form-control bg-light border-0 rounded-end-3" />
                                 </div>
-                                <span asp-validation-for="Email" class="text-danger small"></span>
                             </div>
+
                             <div class="col-md-6">
-                                <label asp-for="Telefon" class="form-label fw-bold small">Telefon</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-0 bg-light"><i class="fas fa-phone text-secondary"></i></span>
-                                    <input asp-for="Telefon" class="form-control form-control-lg bg-light border-0" placeholder="05XX XXX XX XX" />
+                                <label asp-for="Telefon" class="form-label small fw-semibold">Telefon</label>
+                                <div class="input-group shadow-sm">
+                                    <span class="input-group-text bg-light border-0">
+                                        <i class="fas fa-phone text-secondary"></i>
+                                    </span>
+                                    <input asp-for="Telefon" class="form-control bg-light border-0 rounded-end-3" />
                                 </div>
-                                <span asp-validation-for="Telefon" class="text-danger small"></span>
                             </div>
+
                             <div class="col-12">
-                                <label asp-for="Sifre" class="form-label fw-bold small">Şifre</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-0 bg-light"><i class="fas fa-lock text-secondary"></i></span>
-                                    <input asp-for="Sifre" type="password" class="form-control form-control-lg bg-light border-0" placeholder="******" />
+                                <label asp-for="Sifre" class="form-label small fw-semibold">Şifre</label>
+                                <div class="input-group shadow-sm">
+                                    <span class="input-group-text bg-light border-0">
+                                        <i class="fas fa-lock text-secondary"></i>
+                                    </span>
+                                    <input asp-for="Sifre" type="password" class="form-control bg-light border-0 rounded-end-3" />
                                 </div>
-                                <span asp-validation-for="Sifre" class="text-danger small"></span>
                             </div>
                         </div>
 
-                        <h6 class="text-muted text-uppercase fw-bold mb-3 font-size-sm border-top pt-3">
-                            <i class="fas fa-dumbbell me-2"></i> Fiziksel Bilgiler
-                        </h6>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-4">
-                                <label asp-for="Boy" class="form-label fw-bold small">Boy (cm)</label>
-                                <input asp-for="Boy" type="number" class="form-control bg-light border-0" placeholder="180" />
-                                <span asp-validation-for="Boy" class="text-danger small"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="Kilo" class="form-label fw-bold small">Kilo (kg)</label>
-                                <input asp-for="Kilo" type="number" class="form-control bg-light border-0" placeholder="75" />
-                                <span asp-validation-for="Kilo" class="text-danger small"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="DogumTarihi" class="form-label fw-bold small">Doğum Tarihi</label>
-                                [Image of date picker interface element]
-                                <input asp-for="DogumTarihi" type="date" class="form-control bg-light border-0" />
-                                <span asp-validation-for="DogumTarihi" class="text-danger small"></span>
-                            </div>
-                        </div>
-
-                        <h6 class="text-muted text-uppercase fw-bold mb-3 font-size-sm border-top pt-3">
-                            <i class="fas fa-clipboard-list me-2"></i> Üyelik Detayları
-                        </h6>
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label asp-for="KayitTarihi" class="form-label fw-bold small">Kayıt Tarihi</label>
-                                <input asp-for="KayitTarihi" type="datetime-local" class="form-control bg-light border-0" />
-                                <span asp-validation-for="KayitTarihi" class="text-danger small"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="PaketId" class="form-label fw-bold small">Üyelik Paketi</label>
-                                <select asp-for="PaketId" class="form-select bg-light border-0" asp-items="ViewBag.PaketId">
-                                    <option value="">-- Paket Seçiniz --</option>
-                                </select>
-                                <span asp-validation-for="PaketId" class="text-danger small"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="EgitmenId" class="form-label fw-bold small">Atanacak Eğitmen</label>
-                                <select asp-for="EgitmenId" class="form-select bg-light border-0" asp-items="ViewBag.EgitmenId">
-                                    <option value="">-- Eğitmen Seçiniz --</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                            <a asp-action="Index" class="btn btn-light btn-lg px-4 rounded-pill">
-                                <i class="fas fa-arrow-left me-2"></i> Listeye Dön
+                        <!-- BUTONLAR -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                <i class="fas fa-arrow-left me-2"></i> Geri
                             </a>
-                            <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm hover-scale">
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">
                                 <i class="fas fa-save me-2"></i> Kaydı Tamamla
                             </button>
                         </div>
@@ -125,9 +101,11 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @{

@@ -5,79 +5,129 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container mt-4">
-    <div class="card shadow border-0">
-        <div class="card-header bg-dark text-white">
-            <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i> Yeni Randevu Kaydı</h4>
-        </div>
-        <div class="card-body p-4">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
 
-            <form asp-action="Create" id="adminRandevuForm">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
-                @if (ViewBag.Hata != null)
-                {
-                    <div class="alert alert-warning border-warning text-dark">
-                        <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.Hata
-                    </div>
-                }
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Hangi Üye İçin?</label>
-                        <select asp-for="UyeId" class="form-select" asp-items="ViewBag.UyeListesi">
-                            <option value="">-- Üye Seçiniz --</option>
-                        </select>
-                        <span asp-validation-for="UyeId" class="text-danger"></span>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Eğitmen</label>
-                        <select asp-for="EgitmenId" class="form-select" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
-                            <option value="">-- Eğitmen Seçiniz --</option>
-                        </select>
-                        <span asp-validation-for="EgitmenId" class="text-danger"></span>
+                <!-- HEADER -->
+                <div class="card-header bg-dark text-white p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-25 p-3 rounded-circle me-3">
+                            <i class="fas fa-calendar-plus fa-2x"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-0 fw-bold">Yeni Randevu Oluştur</h4>
+                            <small class="opacity-75">Admin tarafından manuel randevu kaydı</small>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Tarih</label>
-                        <input asp-for="Tarih" type="date" class="form-control" id="dtpTarih" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                        <span asp-validation-for="Tarih" class="text-danger"></span>
-                    </div>
+                <div class="card-body p-5">
+                    <form asp-action="Create" id="adminRandevuForm">
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Saat</label>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger small"></div>
 
-                        <select asp-for="Saat" class="form-select" id="drpSaat" disabled
-                                data-url="@Url.Action("GetMusaitSaatler", "Randevus", new { area = "Admin" })">
-                            <option value="">Önce Eğitmen ve Tarih Seçiniz</option>
-                        </select>
+                        @if (ViewBag.Hata != null)
+                        {
+                            <div class="alert alert-warning small">
+                                <i class="fas fa-exclamation-triangle me-2"></i>@ViewBag.Hata
+                            </div>
+                        }
 
-                        <span asp-validation-for="Saat" class="text-danger"></span>
-                    </div>
+                        <!-- ÜYE + EĞİTMEN -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="UyeId"
+                                            asp-items="ViewBag.UyeListesi"
+                                            class="form-select">
+                                        <option value="" disabled selected>Üye Seçiniz</option>
+                                    </select>
+                                    <label asp-for="UyeId">
+                                        <i class="fas fa-user me-2 text-secondary"></i>Üye
+                                    </label>
+                                </div>
+                                <span asp-validation-for="UyeId" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="EgitmenId"
+                                            asp-items="ViewBag.EgitmenListesi"
+                                            class="form-select"
+                                            id="drpEgitmen">
+                                        <option value="" disabled selected>Eğitmen Seçiniz</option>
+                                    </select>
+                                    <label asp-for="EgitmenId">
+                                        <i class="fas fa-user-tie me-2 text-secondary"></i>Eğitmen
+                                    </label>
+                                </div>
+                                <span asp-validation-for="EgitmenId" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- TARİH + SAAT -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Tarih"
+                                           type="date"
+                                           class="form-control"
+                                           id="dtpTarih"
+                                           min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                    <label asp-for="Tarih">
+                                        <i class="fas fa-calendar-day me-2 text-secondary"></i>Tarih
+                                    </label>
+                                </div>
+                                <span asp-validation-for="Tarih" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="Saat"
+                                            class="form-select"
+                                            id="drpSaat"
+                                            disabled
+                                            data-url="@Url.Action("GetMusaitSaatler", "Randevus", new { area = "Admin" })">
+                                        <option value="">Önce Eğitmen ve Tarih Seçiniz</option>
+                                    </select>
+                                    <label asp-for="Saat">
+                                        <i class="fas fa-clock me-2 text-secondary"></i>Saat
+                                    </label>
+                                </div>
+                                <span asp-validation-for="Saat" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- DURUM -->
+                        <div class="form-floating mb-5">
+                            <select asp-for="Durum" class="form-select">
+                                <option value="Onaylandı">Onaylandı</option>
+                                <option value="Onay Bekliyor">Onay Bekliyor</option>
+                            </select>
+                            <label asp-for="Durum">
+                                <i class="fas fa-info-circle me-2 text-secondary"></i>Randevu Durumu
+                            </label>
+                        </div>
+
+                        <!-- BUTONLAR -->
+                        <div class="d-flex justify-content-between align-items-center border-top pt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                                <i class="fas fa-arrow-left me-2"></i>İptal
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success btn-lg rounded-pill px-5 shadow-sm">
+                                <i class="fas fa-save me-2"></i>Kaydet
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Randevu Durumu</label>
-                    <select asp-for="Durum" class="form-select">
-                        <option value="Onaylandı">Onaylandı</option>
-                        <option value="Onay Bekliyor">Onay Bekliyor</option>
-                    </select>
-                </div>
-
-                <hr />
-
-                <div class="d-flex justify-content-end gap-2">
-                    <a asp-action="Index" class="btn btn-secondary px-4">İptal</a>
-                    <button type="submit" class="btn btn-success px-5 fw-bold">
-                        <i class="fas fa-save me-2"></i> Kaydet
-                    </button>
-                </div>
-
-            </form>
         </div>
     </div>
 </div>

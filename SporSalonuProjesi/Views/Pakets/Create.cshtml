@@ -5,97 +5,108 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container mt-4">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg border-success">
-                <div class="card-header bg-success text-white">
-                    <h3 class="card-title mb-0">
-                        <i class="fas fa-box-open me-2"></i> Yeni Üyelik Paketi Oluştur
-                    </h3>
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+             
+                <div class="card-header bg-success text-white p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-25 p-3 rounded-circle me-3">
+                            <i class="fas fa-box-open fa-2x"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-0 fw-bold">Yeni Üyelik Paketi</h4>
+                            <small class="opacity-75">Yeni bir üyelik paketi oluşturun</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+
+                <div class="card-body p-5">
                     <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-                        <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger small"></div>
+
+                        <div class="row g-4">
+                        
                             <div class="col-md-6">
-                                <h5 class="text-success border-bottom pb-2 mb-3">Paket Detayları</h5>
+                                <h6 class="fw-bold text-success mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Paket Detayları
+                                </h6>
 
-                                <div class="mb-3">
-                                    <label asp-for="PaketAdi" class="form-label fw-bold">Paket Adı</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fas fa-tag text-success"></i></span>
-                                        <input asp-for="PaketAdi" class="form-control" placeholder="Örn: Gold Üyelik" />
-                                    </div>
-                                    <span asp-validation-for="PaketAdi" class="text-danger"></span>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="PaketAdi" class="form-control" placeholder="Paket Adı" />
+                                    <label asp-for="PaketAdi">
+                                        <i class="fas fa-tag me-2 text-success"></i>Paket Adı
+                                    </label>
+                                    <span asp-validation-for="PaketAdi" class="text-danger small"></span>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label asp-for="Fiyat" class="form-label fw-bold">Fiyat (₺)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fas fa-lira-sign text-success"></i></span>
-                                        <input asp-for="Fiyat" type="number" class="form-control" placeholder="0.00" />
-                                    </div>
-                                    <span asp-validation-for="Fiyat" class="text-danger"></span>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Fiyat" type="number" class="form-control" placeholder="Fiyat" />
+                                    <label asp-for="Fiyat">
+                                        <i class="fas fa-lira-sign me-2 text-success"></i>Fiyat (₺)
+                                    </label>
+                                    <span asp-validation-for="Fiyat" class="text-danger small"></span>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label asp-for="SureAy" class="form-label fw-bold">Süre (Ay)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="far fa-calendar-alt text-success"></i></span>
-                                        <input asp-for="SureAy" type="number" class="form-control" placeholder="Örn: 12" />
-                                    </div>
-                                    <span asp-validation-for="SureAy" class="text-danger"></span>
+                                <div class="form-floating">
+                                    <input asp-for="SureAy" type="number" class="form-control" placeholder="Süre" />
+                                    <label asp-for="SureAy">
+                                        <i class="far fa-calendar-alt me-2 text-success"></i>Süre (Ay)
+                                    </label>
+                                    <span asp-validation-for="SureAy" class="text-danger small"></span>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 ps-md-4 border-start-md">
-                                <h5 class="text-success border-bottom pb-2 mb-3">Kullanım Hakları</h5>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>Kullanım Hakları
+                                </h6>
 
-                                <div class="mb-3">
-                                    <label asp-for="HaftalikRandevuLimiti" class="form-label fw-bold">Haftalık Randevu Limiti</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fas fa-calendar-check text-success"></i></span>
-                                        <input asp-for="HaftalikRandevuLimiti" type="number" class="form-control" placeholder="Örn: 3" />
-                                    </div>
-                                    <span asp-validation-for="HaftalikRandevuLimiti" class="text-danger"></span>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="ToplamAiHakki" class="form-label fw-bold">AI Analiz Hakkı</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fas fa-robot text-success"></i></span>
-                                        <input asp-for="ToplamAiHakki" type="number" class="form-control" placeholder="Örn: 5" />
-                                    </div>
-                                    <small class="text-muted">Üyenin kullanabileceği yapay zeka analiz sayısı.</small>
-                                    <span asp-validation-for="ToplamAiHakki" class="text-danger"></span>
-                                </div>
-
-                                <div class="mb-3 mt-4 p-3 border rounded bg-light d-flex justify-content-between align-items-center">
-                                    <label class="form-check-label fw-bold mb-0" for="sinirsizSwitch">
-                                        <i class="fas fa-infinity text-primary me-2"></i> Sınırsız Erişim
+                                <div class="form-floating mb-3">
+                                    <input asp-for="HaftalikRandevuLimiti" type="number" class="form-control" placeholder="Limit" />
+                                    <label asp-for="HaftalikRandevuLimiti">
+                                        <i class="fas fa-calendar-check me-2 text-success"></i>Haftalık Randevu Limiti
                                     </label>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="sinirsizSwitch" asp-for="SinirsizMi" style="width: 3em; height: 1.5em;">
-                                    </div>
+                                    <span asp-validation-for="HaftalikRandevuLimiti" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ToplamAiHakki" type="number" class="form-control" placeholder="AI Hak" />
+                                    <label asp-for="ToplamAiHakki">
+                                        <i class="fas fa-robot me-2 text-success"></i>AI Analiz Hakkı
+                                    </label>
+                                    <span asp-validation-for="ToplamAiHakki" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-check form-switch bg-light p-3 rounded-3 border">
+                                    <input class="form-check-input" type="checkbox" asp-for="SinirsizMi" />
+                                    <label class="form-check-label fw-bold ms-2">
+                                        <i class="fas fa-infinity text-primary me-2"></i>Sınırsız Erişim
+                                    </label>
                                 </div>
                             </div>
                         </div>
 
-                        <hr />
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a asp-action="Index" class="btn btn-secondary px-4 me-md-2">
-                                <i class="fas fa-times me-2"></i> İptal
+                     
+                        <div class="d-flex justify-content-between align-items-center border-top pt-4 mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                                <i class="fas fa-arrow-left me-2"></i>İptal
                             </a>
-                            <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm">
-                                <i class="fas fa-save me-2"></i> Paketi Oluştur
+
+                            <button type="submit"
+                                    class="btn btn-success btn-lg rounded-pill px-5 shadow-sm">
+                                <i class="fas fa-save me-2"></i>Paketi Oluştur
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
